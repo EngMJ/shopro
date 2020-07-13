@@ -26,6 +26,12 @@ export default {
 		}
 	},
 	onLoad(options) {
+		// #ifdef MP-WEIXIN
+		uni.showShareMenu({
+			withShareTicket: true,
+			menus: ['shareAppMessage', 'shareTimeline']
+		})
+		// #endif
 		let that = this;
 		//每个页面设置分享信息
 		that.setShareInfo();
@@ -163,7 +169,7 @@ export default {
 	},
 
 	// #ifdef MP-WEIXIN
-
+	// 分享到微信好友列表
 	onShareAppMessage(res) {
 		let that = this;
 		return {
@@ -181,6 +187,12 @@ export default {
 					icon: 'none'
 				})
 			}
+		}
+	},
+	// 微信分享到朋友券beta
+	onShareTimeline(res) {
+		return {
+
 		}
 	}
 	// #endif

@@ -9,7 +9,8 @@
 				<text class="cuIcon-right"></text>
 			</view>
 		</view>
-		<view class="goods-box swiper-box x-f">
+		<shopro-load-card v-if="isLoad" :vh="240" v-model="isLoad" @retry="getGoodsList"></shopro-load-card>
+		<view v-else class="goods-box swiper-box x-f">
 			<swiper class="carousel" circular @change="swiperChange" :autoplay="true" duration="2000">
 				<swiper-item v-for="(goods, index) in goodsList" :key="index" class="carousel-item">
 					<view class="goods-list-box x-f">
@@ -36,7 +37,8 @@ export default {
 	data() {
 		return {
 			goodsList: [],
-			swiperCurrent: 0
+			swiperCurrent: 0,
+			isLoad: 'loading'
 		};
 	},
 	props: {
@@ -75,12 +77,18 @@ export default {
 		// 获取拼团商品
 		getGoodsList() {
 			let that = this;
+			that.isLoad = 'loading';
 			that.$api('goods.activity', {
 				activity_id: that.detail.id
 			}).then(res => {
 				if (res.code === 1) {
+					that.isLoad = '';
 					let arr = that.sortData(res.data.goods.data, 4);
 					that.goodsList = arr;
+				} else {
+					setTimeout(() => {
+						that.isLoad = 'fail';
+					}, 200);
 				}
 			});
 		}

@@ -9,6 +9,7 @@
 			</cu-custom>
 		</view>
 		<view class="content_box " style="margin-top: -4rpx;">
+			<shopro-load-card></shopro-load-card>
 			<scroll-view class="scroll-box" scroll-y="true" scroll-with-animation enable-back-to-top>
 				<block v-if="template.length" v-for="(item, index) in template" :key="index">
 					<!-- 搜索 -->
